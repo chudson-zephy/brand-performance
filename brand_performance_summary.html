@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Performance Summary — April 27 – May 3, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #f0a500;
+    --accent2: #58a6ff;
+    --red: #f85149;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #f0883e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+  .page-header {
+    border-left: 4px solid var(--accent);
+    padding-left: 16px;
+    margin-bottom: 32px;
+  }
+  .page-header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .page-header .sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+  .page-header .date-pill {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 10px;
+    font-size: 12px;
+    color: var(--accent);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 8px;
+  }
+
+  /* Overview KPIs */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+  .kpi-card.blue::before { background: var(--accent2); }
+  .kpi-card.red::before { background: var(--red); }
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.orange::before { background: var(--orange); }
+  .kpi-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+  }
+  .kpi-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-top: 6px;
+  }
+
+  /* Section label */
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Main brand table */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 40px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  thead {
+    background: var(--surface2);
+  }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    white-space: nowrap;
+    border-bottom: 2px solid var(--border);
+  }
+  thead th.num { text-align: right; }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  td {
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .brand-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.5px;
+  }
+
+  /* Pill badges */
+  .pill {
+    display: inline-block;
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .pill.red    { background: rgba(248,81,73,0.15);  color: var(--red);    border: 1px solid rgba(248,81,73,0.3); }
+  .pill.yellow { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+  .pill.green  { background: rgba(63,185,80,0.15);  color: var(--green);  border: 1px solid rgba(63,185,80,0.3); }
+  .pill.orange { background: rgba(240,136,62,0.15); color: var(--orange); border: 1px solid rgba(240,136,62,0.3); }
+
+  /* Bar inside cell */
+  .bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+  .bar-bg {
+    width: 80px;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* Notes section */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .note-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .note-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .note-card h3 .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .note-card p {
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 13px;
+  }
+  .note-card p strong { color: var(--text); }
+
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Brand Performance Summary</h1>
+  <div class="sub">Inbound Call Center · All Brands · Compiled from Five9 Summary Report</div>
+  <div class="date-pill">APR 27 – MAY 3, 2026 &nbsp;|&nbsp; 7 DAYS</div>
+</div>
+
+<!-- Overall KPIs -->
+<div class="section-title">Portfolio Overview — All Brands Combined</div>
+<div class="kpi-row">
+  <div class="kpi-card">
+    <div class="kpi-label">Total Calls</div>
+    <div class="kpi-value">4,482</div>
+  </div>
+  <div class="kpi-card red">
+    <div class="kpi-label">Total Abandoned</div>
+    <div class="kpi-value" style="color:var(--red)">328</div>
+  </div>
+  <div class="kpi-card orange">
+    <div class="kpi-label">Abandon Rate</div>
+    <div class="kpi-value" style="color:var(--orange)">8.4%</div>
+  </div>
+  <div class="kpi-card blue">
+    <div class="kpi-label">Avg Call Time</div>
+    <div class="kpi-value" style="color:var(--accent2)">3:12</div>
+  </div>
+  <div class="kpi-card blue">
+    <div class="kpi-label">Avg Queue Wait</div>
+    <div class="kpi-value" style="color:var(--accent2)">9.6s</div>
+  </div>
+  <div class="kpi-card green">
+    <div class="kpi-label">Total Transfers</div>
+    <div class="kpi-value" style="color:var(--green)">523</div>
+  </div>
+</div>
+
+<!-- Main table -->
+<div class="section-title" style="margin-top:8px;">Performance by Brand</div>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Brand</th>
+      <th class="num">Total Calls</th>
+      <th class="num">Abandoned</th>
+      <th class="num">Abandon %</th>
+      <th class="num">Aband ≤30s</th>
+      <th class="num">≤30s %</th>
+      <th class="num">Aband >30s</th>
+      <th class="num">>30s %</th>
+      <th class="num">Svc Level %</th>
+      <th class="num">Avg Call Time</th>
+      <th class="num">Avg Queue</th>
+      <th class="num">Transfers</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- Blue Valley -->
+    <tr>
+      <td class="brand-name">Blue Valley</td>
+      <td class="num">397</td>
+      <td class="num">28</td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span class="pill yellow">7.1%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:54%;background:var(--yellow)"></div></div>
+        </div>
+      </td>
+      <td class="num">27</td>
+      <td class="num"><span class="pill yellow">6.8%</span></td>
+      <td class="num">1</td>
+      <td class="num"><span class="pill green">0.3%</span></td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span>91%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:91%;background:var(--green)"></div></div>
+        </div>
+      </td>
+      <td class="num">2:55</td>
+      <td class="num">6.8s</td>
+      <td class="num">49</td>
+    </tr>
+
+    <!-- Bonsby -->
+    <tr>
+      <td class="brand-name">Bonsby</td>
+      <td class="num">1,044</td>
+      <td class="num">58</td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span class="pill green">5.6%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:43%;background:var(--green)"></div></div>
+        </div>
+      </td>
+      <td class="num">45</td>
+      <td class="num"><span class="pill yellow">4.3%</span></td>
+      <td class="num">13</td>
+      <td class="num"><span class="pill green">1.2%</span></td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span>84%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:84%;background:var(--yellow)"></div></div>
+        </div>
+      </td>
+      <td class="num">2:50</td>
+      <td class="num">10.1s</td>
+      <td class="num">88</td>
+    </tr>
+
+    <!-- Champion and Nash -->
+    <tr>
+      <td class="brand-name">Champion & Nash</td>
+      <td class="num">734</td>
+      <td class="num">96</td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span class="pill red">13.1%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:100%;background:var(--red)"></div></div>
+        </div>
+      </td>
+      <td class="num">89</td>
+      <td class="num"><span class="pill red">12.1%</span></td>
+      <td class="num">7</td>
+      <td class="num"><span class="pill green">1.0%</span></td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span>73%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:73%;background:var(--red)"></div></div>
+        </div>
+      </td>
+      <td class="num">3:06</td>
+      <td class="num">10.0s</td>
+      <td class="num">96</td>
+    </tr>
+
+    <!-- Degree -->
+    <tr>
+      <td class="brand-name">Degree H&amp;C</td>
+      <td class="num">566</td>
+      <td class="num">34</td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span class="pill green">6.0%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:46%;background:var(--green)"></div></div>
+        </div>
+      </td>
+      <td class="num">30</td>
+      <td class="num"><span class="pill yellow">5.3%</span></td>
+      <td class="num">4</td>
+      <td class="num"><span class="pill green">0.7%</span></td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span>83%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:83%;background:var(--yellow)"></div></div>
+        </div>
+      </td>
+      <td class="num">2:56</td>
+      <td class="num">10.7s</td>
+      <td class="num">41</td>
+    </tr>
+
+    <!-- PSI -->
+    <tr>
+      <td class="brand-name">PSI</td>
+      <td class="num">602</td>
+      <td class="num">42</td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span class="pill yellow">7.0%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:54%;background:var(--yellow)"></div></div>
+        </div>
+      </td>
+      <td class="num">40</td>
+      <td class="num"><span class="pill yellow">6.6%</span></td>
+      <td class="num">2</td>
+      <td class="num"><span class="pill green">0.3%</span></td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span>83%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:83%;background:var(--yellow)"></div></div>
+        </div>
+      </td>
+      <td class="num">3:25</td>
+      <td class="num">8.4s</td>
+      <td class="num">111</td>
+    </tr>
+
+    <!-- Steven K Denny -->
+    <tr>
+      <td class="brand-name">Steven K. Denny</td>
+      <td class="num">547</td>
+      <td class="num">70</td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span class="pill red">12.8%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:98%;background:var(--red)"></div></div>
+        </div>
+      </td>
+      <td class="num">61</td>
+      <td class="num"><span class="pill red">11.2%</span></td>
+      <td class="num">9</td>
+      <td class="num"><span class="pill yellow">1.6%</span></td>
+      <td class="num">
+        <div class="bar-wrap">
+          <span>83%</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:83%;background:var(--yellow)"></div></div>
+        </div>
+      </td>
+      <td class="num">4:11</td>
+      <td class="num">10.2s</td>
+      <td class="num">138</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<!-- Abandon split notes -->
+<div class="section-title">Abandon Rate — Breakdown Notes</div>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:32px;font-size:13px;line-height:1.6;color:var(--muted);">
+  <p><strong style="color:var(--text)">≤ 30 seconds ("Short Abandon"):</strong> Caller disconnected before reaching 30 seconds in queue. Typically impatient callers or accidental calls. High short-abandon counts can indicate a caller experience issue early in the queue — hold music, IVR friction, or perceived wait length.</p>
+  <br>
+  <p><strong style="color:var(--text)">&gt; 30 seconds ("True Abandon"):</strong> Caller waited beyond 30 seconds before hanging up. These represent genuine frustration with wait time and are the more operationally meaningful metric. Champion &amp; Nash leads in total abandons but the majority are short-abandons (≤30s), suggesting an early-queue experience problem rather than a staffing/capacity issue. StevenKDenny has the highest over-30s abandon rate at 1.6%, indicating real wait-time pressure.</p>
+  <br>
+  <p><strong style="color:var(--text)">Note on the ≤30s spike:</strong> 219 of the 328 total abandons across all brands were logged at exactly 30.000 seconds — likely a system threshold or default timeout value in Five9. These are counted in the "≤30s" bucket. Actual under-30s caller drops are a subset of this number.</p>
+</div>
+
+<!-- Brand callouts -->
+<div class="section-title">Key Brand Observations</div>
+<div class="notes-grid">
+
+  <div class="note-card">
+    <h3><span class="dot" style="background:var(--red)"></span>Champion &amp; Nash — Watch List</h3>
+    <p>Highest abandon rate at <strong>13.1%</strong> and 96 total abandons on 734 calls. Short-abandon % of <strong>12.1%</strong> dominates — most callers drop in the first 30s. Service level is the lowest in the portfolio at <strong>73%</strong>. Priority brand to investigate queue experience and early-call handling.</p>
+  </div>
+
+  <div class="note-card">
+    <h3><span class="dot" style="background:var(--red)"></span>Steven K. Denny — Watch List</h3>
+    <p>Second-highest abandon rate at <strong>12.8%</strong> with the <strong>longest avg call time (4:11)</strong> in the portfolio. Also leads in transfers at <strong>138</strong>, suggesting potential routing or first-call resolution issues. True abandons (>30s) are highest at <strong>1.6%</strong>.</p>
+  </div>
+
+  <div class="note-card">
+    <h3><span class="dot" style="background:var(--green)"></span>Bonsby — Best Performer</h3>
+    <p>Lowest abandon rate at <strong>5.6%</strong> across the highest call volume (<strong>1,044 calls</strong>). Also holds the shortest avg call time at <strong>2:50</strong>. Solid performance heading into the Degree/Bonsby merger — sets a strong operational baseline.</p>
+  </div>
+
+  <div class="note-card">
+    <h3><span class="dot" style="background:var(--green)"></span>Degree H&amp;C — Solid</h3>
+    <p>Clean numbers at <strong>6.0% abandon</strong> and avg call time of <strong>2:56</strong>. Lowest transfer volume at <strong>41</strong>. Good performance given the merger transition context — suggests the team is stable operationally.</p>
+  </div>
+
+  <div class="note-card">
+    <h3><span class="dot" style="background:var(--accent2)"></span>Blue Valley — Strong SVC Level</h3>
+    <p>Best service level in portfolio at <strong>91%</strong> and the lowest avg queue wait at <strong>6.8 seconds</strong>. Abandon rate of <strong>7.1%</strong> is slightly elevated but nearly all are short-abandons (0.3% true abandon). Overall a clean operation.</p>
+  </div>
+
+  <div class="note-card">
+    <h3><span class="dot" style="background:var(--yellow)"></span>PSI — High Transfer Volume</h3>
+    <p>Transfer count of <strong>111</strong> is notably high relative to 602 calls (~18% transfer rate). Abandon rate is moderate at <strong>7.0%</strong>. Avg call time of <strong>3:25</strong> is above midrange. Worth reviewing transfer reasons to identify routing gaps or agent escalation habits.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated from Five9 Summary Report · Apr 27 – May 3, 2026 · All figures represent inbound calls · Service Level = % of calls answered within threshold · Abandon ≤30s includes calls logged at exactly 30.000s
+</div>
+
+</body>
+</html>
